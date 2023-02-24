@@ -1,36 +1,32 @@
-module.exports = function toReadable (number) {
+module.exports = function toReadable(num) {
+    let result = "";
 
-    n1 = ['zero','one','two','tree','four','five','six','seven','eight','nine',
-    'ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen']
+    const number = ["", " one", " two", " three", " four", " five", " six", " seven", " eight", " nine", " ten", " eleven",
+        " twelve", " thirteen", " fourteen", " fifteen", " sixteen", " seventeen", " eighteen", " nineteen", ];
+    const score = [ "",  "",  " twenty", " thirty", " forty", " fifty", " sixty", " seventy", " eighty", " ninety",];
 
-    x = number
-    x = x+""
-    res = ""
-
-    if(x == 10) return 'ten'
-    if(x>99) {
-        res += parseHundreds(x)
-        if (parseInt(x.slice(x.length-1,x.length))==0&&parseInt(x.slice(x.length-2,x.length-1))==0){
-        res = res.slice(0,res.length-1)
-        return res
+    const hund = " hundred";
+    const numToString = num.toString();
+    if (num === 0) {
+        return (result = "zero");
+    }
+    if (num >= 1 && num < 20) {
+        result = number[num];
+    } else if (num >= 20 && num <= 99) {
+        if (numToString.length == 2) {
+            result += score[parseInt(numToString.charAt(0))];
+            result += number[parseInt(numToString.charAt(1))];
+        }
+    } else if (numToString.length == 3) {
+        result = number[parseInt(numToString.charAt(0))] + hund;
+        if (parseInt(numToString.charAt(1)) < 2) {
+            result +=
+                number[parseInt(numToString.charAt(1) + numToString.charAt(2))];
+        } else {
+            result += score[parseInt(numToString.charAt(1))];
+            result += number[parseInt(numToString.charAt(2))];
         }
     }
-    if(parseInt(x.slice(x.length-2,x.length))>=11&&parseInt(x.slice(x.length-2,x.length))<=19) {
-        res+=n1[parseInt(x.slice(x.length-2,x.length))]
-    
-    }
-    else {
-    if(parseInt(x.slice(x.length-2,x.length-1))==0&&x>99) {
-        res += parseNumerals(x)
-        }
-        else {
-        if(parseInt(x.slice(x.length-1,x.length))==0&&x>19) {
-        res += parseDecades(x)
-        res = res.slice(0,res.length-1)
-        }
-        else res+= parseDecades(x)+parseNumerals(x)
-    }
-    }
-    console.log(res)
-    
+    return result.slice(1);
+};
    
